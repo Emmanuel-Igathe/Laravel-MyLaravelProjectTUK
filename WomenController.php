@@ -1,16 +1,22 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\Product; // Ensure you import the Product model
-
-use App\Models\Women;
+use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class WomenController extends Controller
 {
     public function index()
     {
-        $products = Product::where('category' , 'women')->get();//Fetch women products from database
+        try {
+            // Try to fetch women products from database
+            $products = Product::where('category', 'women')->get();
+        } catch (\Exception $e) {
+            // If there's an error (table doesn't exist, etc.), use empty array
+            Log::error('Error fetching women products: ' . $e->getMessage());
+            $products = collect([]); // Empty collection
+        }
+        
         return view('pages.women', compact('products'));
     }
 }
