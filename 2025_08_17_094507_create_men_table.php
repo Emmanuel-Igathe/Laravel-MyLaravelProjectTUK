@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('men', function (Blueprint $table) {
-            $table->id();
             $table->string('name');
             $table->string('image_url');
             $table->integer('reviews')->default(0);
