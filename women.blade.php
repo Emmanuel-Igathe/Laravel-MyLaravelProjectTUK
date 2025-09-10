@@ -320,28 +320,113 @@
     <!-- Product Grid -->
     <section class="product-showcase">
         <div class="product-container">
-            @if($products->count() > 0)
-                @foreach($products as $product)
-                    <div class="product-card">
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
-                        <p>{{ $product->name }}</p>
-                        <p>Reviews ({{ $product->reviews }})</p>
-                        <h3 class="old-price">was ksh {{ $product->old_price }}</h3>
-                        <h3 class="new-price">Now Ksh {{ $product->new_price }}</h3>
-                        <h4 class="discount-tag">{{ $product->discount }}</h4>
-                        <form action="{{ route('cart.add') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <input type="hidden" name="product_name" value="{{ $product->name }}">
-                            <input type="hidden" name="product_price" value="{{ $product->new_price }}">
-                            <input type="hidden" name="product_image" value="{{ $product->image_url }}">
-                            <button type="submit" class="cart-btn">Add to Cart</button>
-                        </form>
-                    </div>
-                @endforeach
-            @else
-                <p>No products found</p>
-            @endif
+            <?php
+            $products = [
+                [
+                    'id' => 1,
+                    'name' => 'Ladies top tees',
+                    'description' => 'Stylish ladies top t-shirts',
+                    'image_url' => 'https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/58/043766/1.jpg?7709',
+                    'old_price' => 1398,
+                    'new_price' => '899',
+                    'discount' => '-36%',
+                    'reviews' => 78
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Graphic Cute Tees',
+                    'description' => 'Cute graphic print t-shirts',
+                    'image_url' => 'https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/97/4145962/1.jpg?0198',
+                    'old_price' => 535,
+                    'new_price' => '390',
+                    'discount' => '-27%',
+                    'reviews' => 64
+                ],
+                [
+                    'id' => 3,
+                    'name' => 'BLWOENS Cute fit shirts',
+                    'description' => 'Comfortable cute fit shirts',
+                    'image_url' => 'https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/89/4145962/1.jpg?0196',
+                    'old_price' => 535,
+                    'new_price' => '390',
+                    'discount' => '-27%',
+                    'reviews' => 64
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'Top round neck',
+                    'description' => 'Classic round neck tops',
+                    'image_url' => 'https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/41/3861232/1.jpg?6872',
+                    'old_price' => 904,
+                    'new_price' => '904',
+                    'discount' => '0%',
+                    'reviews' => 64
+                ],
+                [
+                    'id' => 5,
+                    'name' => 'PCS ladies tops',
+                    'description' => 'Premium PCS brand tops',
+                    'image_url' => 'https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/06/9363271/1.jpg?0112',
+                    'old_price' => 1398,
+                    'new_price' => '899',
+                    'discount' => '-36%',
+                    'reviews' => 64
+                ],
+                [
+                    'id' => 6,
+                    'name' => 'Casual short sleeve',
+                    'description' => 'Casual short sleeve tops',
+                    'image_url' => 'https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/43/0379662/1.jpg?8140',
+                    'old_price' => 1000,
+                    'new_price' => '610',
+                    'discount' => '-25%',
+                    'reviews' => 64
+                ],
+                [
+                    'id' => 7,
+                    'name' => 'Yixin 3 pieces',
+                    'description' => 'Yixin brand 3-piece set',
+                    'image_url' => 'https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/78/9532291/1.jpg?0553',
+                    'old_price' => 1340,
+                    'new_price' => '1059',
+                    'discount' => '-21%',
+                    'reviews' => 64
+                ],
+                [
+                    'id' => 8,
+                    'name' => 'Summer shirt',
+                    'description' => 'Lightweight summer shirts',
+                    'image_url' => 'https://ke.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/37/7011562/1.jpg?1388',
+                    'old_price' => 535,
+                    'new_price' => '377 - 390',
+                    'discount' => '-34%',
+                    'reviews' => 64
+                ]
+            ];
+            
+            if (count($products) > 0) {
+                foreach ($products as $product) {
+                    echo '<div class="product-card">';
+                    echo '<img src="' . $product['image_url'] . '" alt="' . $product['name'] . '">';
+                    echo '<p>' . $product['name'] . '</p>';
+                    echo '<p>Reviews (' . $product['reviews'] . ')</p>';
+                    echo '<h3 class="old-price">was ksh ' . $product['old_price'] . '</h3>';
+                    echo '<h3 class="new-price">Now Ksh ' . $product['new_price'] . '</h3>';
+                    echo '<h4 class="discount-tag">' . $product['discount'] . '</h4>';
+                    echo '<form action="/cart/add" method="post">';
+                    echo '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+                    echo '<input type="hidden" name="product_id" value="' . $product['id'] . '">';
+                    echo '<input type="hidden" name="product_name" value="' . $product['name'] . '">';
+                    echo '<input type="hidden" name="product_price" value="' . $product['new_price'] . '">';
+                    echo '<input type="hidden" name="product_image" value="' . $product['image_url'] . '">';
+                    echo '<button type="submit" class="cart-btn">Add to Cart</button>';
+                    echo '</form>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<p>No products found</p>';
+            }
+            ?>
         </div>
     </section>
 
@@ -372,7 +457,7 @@
             <div class="footer-section">
                 <h3>QuickLinks</h3>
                 <ul class="quick-links">
-                    <li><a class="quick-links" href="{{ url('home') }}">HOME</a></li>
+                    <li><a class="quick-links" href="{{ url('/') }}">HOME</a></li>
                     <li><a class="quick-links" href="{{ url('men') }}">MEN</a></li>
                     <li><a class="quick-links" href="{{ url('women') }}">WOMEN</a></li>
                     <li><a class="quick-links" href="{{ url('about') }}">ABOUT US</a></li>
