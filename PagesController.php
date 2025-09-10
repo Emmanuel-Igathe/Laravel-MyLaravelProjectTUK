@@ -8,7 +8,7 @@ class PagesController extends Controller
 {
     public function welcome() {
         $title = "Welcome to Simple Wear";
-        return view('welcome')->with('title', $title);
+        return view('pages.welcome')->with('title', $title);
     }
 
     public function index(){
